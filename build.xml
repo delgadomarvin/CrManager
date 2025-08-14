@@ -1,0 +1,29 @@
+<project name="DataMigrator" basedir="." default="run">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="main.class" value="DataMigrator"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean" description="Deletes the build directory">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" description="Compiles the Java source code">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" includeantruntime="false"/>
+    </target>
+
+    <target name="run" depends="compile" description="Runs the data migration application">
+        <java classname="${main.class}" classpathref="classpath">
+            <classpath>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+</project>
